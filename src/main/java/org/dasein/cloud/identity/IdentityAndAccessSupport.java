@@ -36,6 +36,7 @@ import javax.annotation.Nullable;
 public interface IdentityAndAccessSupport extends AccessControlledService {
     @SuppressWarnings("unused") static public final ServiceAction ANY                 = new ServiceAction("IAM:ANY");
 
+    @SuppressWarnings("unused") static public final ServiceAction ASSUME_ROLE         = new ServiceAction("IAM:ASSUME_ROLE");
     @SuppressWarnings("unused") static public final ServiceAction ADD_GROUP_ACCESS    = new ServiceAction("IAM:ADD_GROUP_ACCESS");
     @SuppressWarnings("unused") static public final ServiceAction ADD_USER_ACCESS     = new ServiceAction("IAM:ADD_USER_ACCESS");
     @SuppressWarnings("unused") static public final ServiceAction CREATE_USER         = new ServiceAction("IAM:CREATE_USER");
@@ -60,7 +61,16 @@ public interface IdentityAndAccessSupport extends AccessControlledService {
     @SuppressWarnings("unused") static public final ServiceAction REMOVE_USER_ACCESS  = new ServiceAction("IAM:REMOVE_USER_ACCESS");
     @SuppressWarnings("unused") static public final ServiceAction UPDATE_GROUP        = new ServiceAction("IAM:UPDATE_GROUP");
     @SuppressWarnings("unused") static public final ServiceAction UPDATE_USER         = new ServiceAction("IAM:UPDATE_USER");
-    
+
+    /**
+     * Grants temporary, session-based access keys for the given role.
+     * @param options options necessary to assume the role
+     * @return temporary access keys
+     * @throws CloudException
+     * @throws InternalException
+     */
+    public TemporaryAccessKey enableTemporaryAPIAccess( @Nonnull AssumeRoleOptions options ) throws CloudException, InternalException;
+
     /**
      * Adds an existing user to the specified existing groups.
      * @param providerUserId the unique cloud provider ID for the user to add

@@ -56,6 +56,7 @@ public class ProviderContext implements Serializable {
     
     private byte[]     accessPrivate;
     private byte[]     accessPublic;
+    private byte[]     sessionToken;
     private String     accountNumber;
     private String     cloudName;
     private Properties customProperties;
@@ -95,7 +96,7 @@ public class ProviderContext implements Serializable {
      * some peculiar side-effects.
      */
     public void clear() {
-        clear(accessPublic, accessPrivate, storagePublic, storagePrivate, x509Cert, x509Key, storageX509Cert, storageX509Key);
+        clear(accessPublic, accessPrivate, sessionToken, storagePublic, storagePrivate, x509Cert, x509Key, storageX509Cert, storageX509Key);
     }
     
     /**
@@ -366,4 +367,22 @@ public class ProviderContext implements Serializable {
     public Properties getStorageCustomProperties() {
         return storageCustomProperties;
     }
+
+  /**
+   * The session token for temporary access keys.
+   *
+   * @return the session token.
+   */
+  public @Nullable byte[] getSessionToken() {
+    return sessionToken;
+  }
+
+  /**
+   * Sets the session token for temporary access keys.
+   * @param sessionToken the session token
+   */
+  public void setSessionToken( @Nullable byte[] sessionToken ) {
+    this.sessionToken = sessionToken;
+  }
+
 }
