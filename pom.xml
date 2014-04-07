@@ -229,6 +229,7 @@
           <version>3.0.0.RELEASE</version>
           </extension>
       </extensions>
+      <finalName>${project.artifactId}-${project.version}</finalName>
   </build>
 
   <distributionManagement>
@@ -243,6 +244,31 @@
             <url>s3://twc-grid-files/artifacts/snapshot</url>
     </snapshotRepository>
   </distributionManagement>
+  
+  <repositories>
+        <repository>
+            <id>maven-s3-release-repo</id>
+            <name>S3 Release Repository</name>
+            <url>s3://twc-grid-files/artifacts/release</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>maven-s3-snapshot-repo</id>
+            <name>S3 Snapshot Repository</name>
+            <url>s3://twc-grid-files/artifacts/snapshot</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 
   <developers>
     <developer>
