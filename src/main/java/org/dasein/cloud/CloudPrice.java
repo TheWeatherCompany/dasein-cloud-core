@@ -11,21 +11,23 @@ import javax.annotation.Nonnull;
  * more frequent than detailed state changes.
  */
 
-public abstract class AbstractPrice {
-    private String resourceId;
-    private String providerId;
-    private BigDecimal price;
-
-    public AbstractPrice(@Nonnull String provider, @Nonnull String id, @Nonnull BigDecimal price) {
-    	providerId = provider;
-        resourceId = id;
-        this.price = price;
-    }
+public abstract class CloudPrice {
+	protected String regionId;
+    protected String resourceId;
+    protected String providerId;
+    protected BigDecimal price;
 
     /**
      * @return the cloud provider's unique identifier for this resource
      */
-    public @Nonnull String resourceId() {
+    public @Nonnull String getResourceId() {
+        return resourceId;
+    }
+    
+    /**
+     * @return the cloud provider's region the price belongs to
+     */
+    public @Nonnull String getRegionId() {
         return resourceId;
     }
 
@@ -40,7 +42,7 @@ public abstract class AbstractPrice {
         return price;
     }
     
-    public @Nonnull abstract String priceDescription();
+    public @Nonnull abstract String getPriceDescription();
 
    
 }
