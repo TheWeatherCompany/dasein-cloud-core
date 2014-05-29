@@ -19,15 +19,7 @@
 
 package org.dasein.cloud.compute;
 
-import org.dasein.cloud.CloudException;
-import org.dasein.cloud.CloudProvider;
-import org.dasein.cloud.InternalException;
-import org.dasein.cloud.OperationNotSupportedException;
-import org.dasein.cloud.ProviderContext;
-import org.dasein.cloud.Requirement;
-import org.dasein.cloud.ResourceStatus;
-import org.dasein.cloud.Tag;
-import org.dasein.cloud.identity.IdentityServices;
+import org.dasein.cloud.*;
 import org.dasein.cloud.identity.ServiceAction;
 import org.dasein.cloud.util.APITrace;
 import org.dasein.cloud.util.Cache;
@@ -42,7 +34,6 @@ import org.dasein.util.uom.storage.Megabyte;
 import org.dasein.util.uom.storage.Storage;
 import org.dasein.util.uom.time.Day;
 import org.dasein.util.uom.time.TimePeriod;
-import org.dasein.util.uom.time.Week;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -678,6 +669,11 @@ public abstract class AbstractVMSupport<T extends CloudProvider> implements Virt
             }
         }
         return vms;
+    }
+
+    @Override
+    public @Nonnull Iterable<VirtualMachine> listVirtualMachinesByFilter(@Nonnull VMFilter filter) throws InternalException, CloudException {
+        return listVirtualMachines();
     }
 
     @Override
