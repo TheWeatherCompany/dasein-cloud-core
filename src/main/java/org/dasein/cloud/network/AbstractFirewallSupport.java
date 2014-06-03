@@ -208,6 +208,12 @@ public abstract class AbstractFirewallSupport implements FirewallSupport {
         return true;
     }
 
+    @Nonnull
+    @Override
+    public Collection<Firewall> list(String networkId) throws InternalException, CloudException {
+        return Collections.emptyList();
+    }
+
     @Override
     public @Nonnull Iterable<ResourceStatus> listFirewallStatus() throws InternalException, CloudException {
         ArrayList<ResourceStatus> status = new ArrayList<ResourceStatus>();
