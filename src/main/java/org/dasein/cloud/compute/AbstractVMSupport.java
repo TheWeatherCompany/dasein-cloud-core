@@ -672,11 +672,6 @@ public abstract class AbstractVMSupport<T extends CloudProvider> implements Virt
     }
 
     @Override
-    public @Nonnull Iterable<VirtualMachine> listVirtualMachinesByFilter(@Nonnull VMFilter filter) throws InternalException, CloudException {
-        return listVirtualMachines();
-    }
-
-    @Override
     public void pause(@Nonnull String vmId) throws InternalException, CloudException {
         throw new OperationNotSupportedException("Pause/unpause is not currently implemented for " + getProvider().getCloudName());
     }

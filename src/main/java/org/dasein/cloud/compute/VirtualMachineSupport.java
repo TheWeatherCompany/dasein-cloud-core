@@ -333,9 +333,6 @@ public interface VirtualMachineSupport extends AccessControlledService {
      */
     public @Nonnull Iterable<VirtualMachine> listVirtualMachines(@Nullable VMFilterOptions options) throws InternalException, CloudException;
 
-    @Nonnull
-    Iterable<VirtualMachine> listVirtualMachinesByFilter(@Nonnull VMFilter filter) throws InternalException, CloudException;
-
     /**
      * Executes a hypervisor pause that essentially removes the virtual machine from the hypervisor scheduler.
      * The virtual machine is considered active and volatile at this point, but it won't actually do anything
