@@ -180,7 +180,7 @@ public class VMFilterOptions {
             }
         }
         if (subnetId != null && !subnetId.isEmpty()) {
-            return matchesAny && subnetId.equals(vm.getProviderSubnetId());
+            return subnetId.equals(vm.getProviderSubnetId());
         }
         return !matchesAny;
     }
