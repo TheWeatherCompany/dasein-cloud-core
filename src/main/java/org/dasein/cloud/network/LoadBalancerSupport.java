@@ -510,24 +510,6 @@ public interface LoadBalancerSupport extends AccessControlledService {
     @Deprecated
     public HashMap<String, String> getInstanceHealth(@Nonnull String providerLoadBalancerId, @Nullable String providerVirtualMachineId) throws CloudException, InternalException;
 
-    /**
-     * Allows an existing LB Health Check to be modified
-     * @param providerLBHealthCheckId the ID of the Health Check being adjusted
-     * @param options the new options to which the Health Check will be modified to meet
-     * @return the modified LoadBalancerHealthCheck object
-     * @throws InternalException
-     * @throws CloudException
-     */
-    public LoadBalancerHealthCheck modifyHealthCheck(@Nonnull String providerLBHealthCheckId, @Nonnull HealthCheckOptions options) throws InternalException, CloudException;
-
-    /**
-     * Removes a health check associated with a particular Load Balancer. Only certain clouds allow this operation
-     * @param providerLoadBalancerId the ID of the Load Balancer that has the health check being removed
-     * @throws CloudException
-     * @throws InternalException
-     */
-    public void removeLoadBalancerHealthCheck(@Nonnull String providerLoadBalancerId) throws CloudException, InternalException;
-
 	/**
 	 * Adds subnets to the loadbalancer
 	 *
