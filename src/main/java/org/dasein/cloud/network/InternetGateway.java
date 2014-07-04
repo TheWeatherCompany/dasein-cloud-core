@@ -106,4 +106,15 @@ public class InternetGateway implements Taggable {
         this.tags = tags;
     }
 
+    @Override
+    public String toString() {
+        return "InternetGateway{" +
+                "providerInternetGatewayId='" + providerInternetGatewayId + '\'' +
+                ", providerVlanId='" + providerVlanId + '\'' +
+                ", attachmentState=" + attachmentState +
+                ", providerOwnerId='" + providerOwnerId + '\'' +
+                ", providerRegionId='" + providerRegionId + '\'' +
+                ", tags=" + tags +
+                '}';
+    }
 }
