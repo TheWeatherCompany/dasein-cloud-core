@@ -19,7 +19,6 @@
 
 package org.dasein.cloud.compute;
 
-import java.util.Collection;
 import java.util.Locale;
 
 import org.dasein.cloud.AccessControlledService;
@@ -298,27 +297,4 @@ public interface VolumeSupport extends AccessControlledService {
      * @throws InternalException an error occurred within the Dasein Cloud API implementation
      */
     public void updateTags(@Nonnull String[] volumeIds, @Nonnull Tag... tags) throws CloudException, InternalException;
-
-    /**
-     * Set meta-data for a volume. Remove any tags that were not provided by the incoming tags, and add or
-     * overwrite any new or pre-existing tags.
-     *
-     * @param volumeId the volume to set
-     * @param tags  the meta-data tags to set
-     * @throws CloudException
-     * @throws InternalException
-     */
-    public void setTags(@Nonnull String volumeId, @Nonnull Tag... tags) throws CloudException, InternalException;
-
-    /**
-     * Set meta-data for multiple volumes. Remove any tags that were not provided by the incoming tags, and add or
-     * overwrite any new or pre-existing tags.
-     *
-     * @param volumeIds the volumes to set
-     * @param tags  the meta-data tags to set
-     * @throws CloudException
-     * @throws InternalException
-     */
-    public void setTags(@Nonnull String[] volumeIds, @Nonnull Tag... tags) throws CloudException, InternalException;
-
 }

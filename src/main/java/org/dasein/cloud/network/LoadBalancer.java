@@ -24,7 +24,10 @@ import org.dasein.cloud.Taggable;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Represents a virtual load balancer operating in a cloud. Load balancers have an address/virtual IP (VIP) to which
@@ -112,8 +115,6 @@ public class LoadBalancer implements Networkable, Taggable {
     private IPVersion[]             supportedTraffic;
     private Map<String,String>      tags;
     private String                  providerLBHealthCheckId;
-    private String[]                providerFirewallIds;
-    private LoadBalancerHealthCheck healthCheck;
 
     /**
      * Constructs a load balancer object with no data.
@@ -343,22 +344,6 @@ public class LoadBalancer implements Networkable, Taggable {
     }
 
     /**
-     * Returns array of associated firewall ids
-     * @return array of associated firewall ids
-     */
-    public String[] getProviderFirewallIds() {
-        return providerFirewallIds;
-    }
-
-    /**
-     * Sets the firewall ids.
-     * @param providerFirewallIds the firewall ids
-     */
-    public void setProviderFirewallIds(String[] providerFirewallIds) {
-        this.providerFirewallIds = providerFirewallIds;
-    }
-
-    /**
      * Indicates that this load balancer will support the specified kind of traffic.
      * @param traffic the traffic supported in this load balancer
      * @return this
@@ -384,14 +369,6 @@ public class LoadBalancer implements Networkable, Taggable {
         }
         Collections.addAll(this.listeners, listeners);
         return this;
-    }
-
-    public LoadBalancerHealthCheck getHealthCheck() {
-        return healthCheck;
-    }
-
-    public void setHealthCheck(LoadBalancerHealthCheck healthCheck) {
-        this.healthCheck = healthCheck;
     }
 
     /******************************* DEPRECATED METHODS ***********************************/
