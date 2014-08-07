@@ -125,37 +125,28 @@ public class HealthCheckFilterOptions {
      * @return true if the Health Check matches all criteria
      */
     public boolean matches(@Nonnull LoadBalancerHealthCheck lbhc) {
+        boolean matches = false;
         if( regex != null ){
-            if( !((lbhc.getName() != null && lbhc.getName().matches(regex))
+            matches = ((lbhc.getName() != null && lbhc.getName().matches(regex))
                     || (lbhc.getDescription() != null && lbhc.getDescription().matches(regex))
-                    || (lbhc.getPath() != null && lbhc.getPath().matches(regex))) ) {
-                if( !matchesAny ) {
-                    return false;
-                }
-            }
-            else if( matchesAny ) {
-                return true;
-            }
+                    || (lbhc.getPath() != null && lbhc.getPath().matches(regex)));
         }
         if( protocol != null ) {
-            if( !protocol.equals(lbhc.getProtocol()) ) {
-                if( !matchesAny ) {
-                    return false;
-                }
-            }
-            else if( matchesAny ) {
-                return true;
-            }
+            matches = protocol.equals(lbhc.getProtocol());
+            if( !matchesAny && !matches )
+                return false;
         }
         if( port > 0 ) {
-            if( lbhc.getPort() != port ) {
-                if( !matchesAny ) {
-                    return false;
-                }
+            matches = (lbhc.getPort() == port);
+            if( !matchesAny && !matches ) {
+                return false;
             }
-            else if( matchesAny ) {
-                return true;
-            }
+        }
+        if(!matches && !matchesAny) {
+            return false;
+        }
+        else if(matches && matchesAny){
+            return true;
         }
         return !matchesAny;
     }

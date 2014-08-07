@@ -29,7 +29,10 @@ import org.dasein.cloud.ResourceStatus;
 import org.dasein.cloud.Tag;
 import org.dasein.cloud.identity.IdentityServices;
 import org.dasein.cloud.identity.ServiceAction;
-import org.dasein.cloud.util.*;
+import org.dasein.cloud.util.APITrace;
+import org.dasein.cloud.util.Cache;
+import org.dasein.cloud.util.CacheLevel;
+import org.dasein.cloud.util.NamingConstraints;
 import org.dasein.util.CalendarWrapper;
 import org.dasein.util.Jiterator;
 import org.dasein.util.JiteratorPopulator;
@@ -146,12 +149,12 @@ public abstract class AbstractVMSupport<T extends CloudProvider> implements Virt
         return null;
     }
 
-    @Override
-    public @Nullable String getUserData(@Nonnull String vmId) throws InternalException, CloudException {
-        return null;
-    }
+	@Override
+	public @Nullable String getUserData(@Nonnull String vmId) throws InternalException, CloudException {
+		return null;
+	}
 
-    @Override
+	@Override
     public @Nonnull String getConsoleOutput(@Nonnull String vmId) throws InternalException, CloudException {
         return "";
     }
@@ -529,9 +532,9 @@ public abstract class AbstractVMSupport<T extends CloudProvider> implements Virt
 
     @Override
     public @Nonnull Iterable<VirtualMachineProduct> listProducts(@Nonnull Architecture architecture) throws InternalException, CloudException {
-        return listProducts(architecture, null);
+    	return listProducts(architecture, null);
     }
-
+    
     @Override
     public @Nonnull Iterable<VirtualMachineProduct> listProducts(@Nonnull Architecture architecture, String preferedDataCenterId) throws InternalException, CloudException {
         APITrace.begin(getProvider(), "VM.listProducts");
@@ -844,20 +847,8 @@ public abstract class AbstractVMSupport<T extends CloudProvider> implements Virt
 
     @Override
     public void updateTags(@Nonnull String[] vmIds, @Nonnull Tag... tags) throws CloudException, InternalException {
-        for (String id : vmIds) {
-            updateTags(id, tags);
-        }
-    }
-
-    @Override
-    public void updateTags(@Nonnull String vmId, boolean asynchronous, @Nonnull Tag... tags) throws CloudException, InternalException {
-        // NO-OP
-    }
-
-    @Override
-    public void updateTags(@Nonnull String[] vmIds, boolean asynchronous, @Nonnull Tag... tags) throws CloudException, InternalException {
         for( String id : vmIds ) {
-            updateTags(id, asynchronous, tags);
+            updateTags(id, tags);
         }
     }
 
@@ -870,24 +861,6 @@ public abstract class AbstractVMSupport<T extends CloudProvider> implements Virt
     public void removeTags(@Nonnull String[] vmIds, @Nonnull Tag... tags) throws CloudException, InternalException {
         for( String id : vmIds ) {
             removeTags(id, tags);
-        }
-    }
-
-    @Override
-    public void setTags(@Nonnull String vmId, @Nonnull Tag... tags) throws CloudException, InternalException {
-        setTags(new String[]{vmId}, tags);
-    }
-
-    @Override
-    public void setTags(@Nonnull String[] vmIds, @Nonnull Tag... tags) throws CloudException, InternalException {
-        for (String id : vmIds) {
-            Collection<Tag> collectionForDelete = TagUtils.getTagsForDelete(getVirtualMachine(id).getTags(), tags);
-
-            if (collectionForDelete != null) {
-                removeTags(id, collectionForDelete.toArray(new Tag[collectionForDelete.size()]));
-            }
-
-            updateTags(id, tags);
         }
     }
 
@@ -935,7 +908,7 @@ public abstract class AbstractVMSupport<T extends CloudProvider> implements Virt
             }
             else {
                 prd.setRamSize(new Storage<Megabyte>(512, Storage.MEGABYTE));
-            }
+            } 
             if( json.has("standardHourlyRates") ) {
                 JSONArray rates = json.getJSONArray("standardHourlyRates");
 
