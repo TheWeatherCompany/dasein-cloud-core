@@ -526,6 +526,30 @@ public interface FirewallSupport extends AccessControlledService {
     public void updateTags(@Nonnull String[] firewallIds, @Nonnull Tag... tags) throws CloudException, InternalException;
 
     /**
+     * Updates meta-data for a firewall with the new values. It will not overwrite any value that currently
+     * exists unless it appears in the tags you submit.
+     *
+     * @param firewallId the firewall to update
+     * @param asynchronous the type of update, if true - will update asynchronously
+     * @param tags the meta-data tags to set
+     * @throws CloudException    an error occurred within the cloud provider
+     * @throws InternalException an error occurred within the Dasein Cloud API implementation
+     */
+    public void updateTags( @Nonnull String firewallId, boolean asynchronous, @Nonnull Tag... tags ) throws CloudException, InternalException;
+
+    /**
+     * Updates meta-data for multiple firewalls with the new values. It will not overwrite any value that currently
+     * exists unless it appears in the tags you submit.
+     *
+     * @param firewallIds the firewalls to update
+     * @param asynchronous the type of update, if true - will update asynchronously
+     * @param tags  the meta-data tags to set
+     * @throws CloudException    an error occurred within the cloud provider
+     * @throws InternalException an error occurred within the Dasein Cloud API implementation
+     */
+    public void updateTags(@Nonnull String[] firewallIds, boolean asynchronous, @Nonnull Tag... tags) throws CloudException, InternalException;
+
+    /**
      * Set meta-data for a firewall. Remove any tags that were not provided by the incoming tags, and add or
      * overwrite any new or pre-existing tags.
      *

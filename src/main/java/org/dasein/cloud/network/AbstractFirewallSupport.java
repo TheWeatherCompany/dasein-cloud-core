@@ -375,6 +375,10 @@ public abstract class AbstractFirewallSupport implements FirewallSupport {
         }
     }
 
+    @Override public void updateTags( @Nonnull String firewallId, boolean asynchronous, @Nonnull Tag... tags ) throws CloudException, InternalException {
+        updateTags(new String[]{firewallId}, asynchronous, tags);
+    }
+
     @Override
     public void setTags(@Nonnull String firewallId, @Nonnull Tag... tags) throws CloudException, InternalException {
         setTags( new String[]{firewallId}, tags);
