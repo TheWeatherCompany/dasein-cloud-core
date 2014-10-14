@@ -497,7 +497,7 @@ public interface LoadBalancerSupport extends AccessControlledService {
      * @throws CloudException    an error occurred within the cloud provider
      * @throws InternalException an error occurred within the Dasein Cloud API implementation
      */
-    public Map<String, String> listTags( String id ) throws CloudException, InternalException;
+    public Iterable<Tag> listTags( String id ) throws CloudException, InternalException;
 
     /********************************** DEPRECATED METHODS *************************************/
 
