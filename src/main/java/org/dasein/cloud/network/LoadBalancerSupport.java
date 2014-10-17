@@ -401,30 +401,6 @@ public interface LoadBalancerSupport extends AccessControlledService {
      * exists unless it appears in the tags you submit.
      *
      * @param id   the load balancer to update
-     * @param asynchronous the type of update, if true - will update asynchronously
-     * @param tags the meta-data tags to set
-     * @throws CloudException    an error occurred within the cloud provider
-     * @throws InternalException an error occurred within the Dasein Cloud API implementation
-     */
-    public abstract void updateTags( @Nonnull String id, boolean asynchronous, @Nonnull Tag... tags ) throws CloudException, InternalException;
-
-    /**
-     * Updates meta-data for multiple load balancers with the new values. It will not overwrite any value that currently
-     * exists unless it appears in the tags you submit.
-     *
-     * @param ids  the load balancers to update
-     * @param asynchronous the type of update, if true - will update asynchronously
-     * @param tags the meta-data tags to set
-     * @throws CloudException    an error occurred within the cloud provider
-     * @throws InternalException an error occurred within the Dasein Cloud API implementation
-     */
-    public abstract void updateTags( @Nonnull String[] ids, boolean asynchronous, @Nonnull Tag... tags ) throws CloudException, InternalException;
-
-    /**
-     * Updates meta-data for a load balancer with the new values. It will not overwrite any value that currently
-     * exists unless it appears in the tags you submit.
-     *
-     * @param id   the load balancer to update
      * @param tags the meta-data tags to set
      * @throws CloudException    an error occurred within the cloud provider
      * @throws InternalException an error occurred within the Dasein Cloud API implementation

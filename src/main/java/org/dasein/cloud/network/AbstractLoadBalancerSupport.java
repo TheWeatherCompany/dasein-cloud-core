@@ -468,10 +468,6 @@ public abstract class AbstractLoadBalancerSupport<T extends CloudProvider> imple
         updateTags(new String[]{id}, tags);
     }
 
-    @Override public void updateTags( @Nonnull String id, boolean asynchronous, @Nonnull Tag... tags ) throws CloudException, InternalException {
-        updateTags(new String[]{id}, asynchronous, tags);
-    }
-
     @Override public void setTags( @Nonnull String id, @Nonnull Tag... tags ) throws CloudException, InternalException {
         setTags(new String[]{id}, tags);
     }
