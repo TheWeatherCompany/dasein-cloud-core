@@ -527,13 +527,6 @@ public abstract class AbstractVLANSupport<T extends CloudProvider> implements VL
     }
 
     @Override
-    public void updateSubnetTags(@Nonnull String[] subnetIds, boolean asynchronous, @Nonnull Tag... tags) throws CloudException, InternalException {
-        for (String subnetId : subnetIds) {
-            updateSubnetTags(subnetId, asynchronous, tags);
-        }
-    }
-
-    @Override
     public void updateVLANTags(@Nonnull String vlanId, @Nonnull Tag... tags) throws CloudException, InternalException {
         // NO-OP
     }
@@ -546,23 +539,9 @@ public abstract class AbstractVLANSupport<T extends CloudProvider> implements VL
     }
 
     @Override
-    public void updateInternetGatewayTags(@Nonnull String[] internetGatewayIds, boolean asynchronous, @Nonnull Tag... tags) throws CloudException, InternalException {
-        for (String internetGatewayId:internetGatewayIds) {
-            updateInternetGatewayTags(internetGatewayId, asynchronous, tags);
-        }
-    }
-
-    @Override
     public void updateInternetGatewayTags(@Nonnull String[] internetGatewayIds, @Nonnull Tag... tags) throws CloudException, InternalException {
         for (String internetGatewayId : internetGatewayIds) {
             updateInternetGatewayTags(internetGatewayId, tags);
-        }
-    }
-
-    @Override
-    public void updateRoutingTableTags(@Nonnull String[] routingTableIds, boolean asynchronous, @Nonnull Tag... tags) throws CloudException, InternalException {
-        for (String routingTableId : routingTableIds) {
-            updateRoutingTableTags(routingTableId, asynchronous, tags);
         }
     }
 
@@ -598,7 +577,7 @@ public abstract class AbstractVLANSupport<T extends CloudProvider> implements VL
 
             Collection<Tag> collectionForDelete = TagUtils.getTagsForDelete(getSubnet(id).getTags(), tags);
 
-            if (collectionForDelete != null) {
+            if (collectionForDelete != null && collectionForDelete.size() != 0) {
                 removeSubnetTags(id, collectionForDelete.toArray(new Tag[collectionForDelete.size()]));
             }
 
@@ -611,7 +590,7 @@ public abstract class AbstractVLANSupport<T extends CloudProvider> implements VL
         for (String id : routingTableIds) {
             Collection<Tag> collectionForDelete = TagUtils.getTagsForDelete( getRoutingTable(id).getTags(), tags);
 
-            if (collectionForDelete != null) {
+            if (collectionForDelete != null && collectionForDelete.size() != 0) {
                 removeRoutingTableTags(id, collectionForDelete.toArray(new Tag[collectionForDelete.size()]));
             }
 
@@ -624,7 +603,7 @@ public abstract class AbstractVLANSupport<T extends CloudProvider> implements VL
         for (String id : internetGatewayIds) {
             Collection<Tag> collectionForDelete = TagUtils.getTagsForDelete(getInternetGatewayById(id).getTags(), tags);
 
-            if (collectionForDelete != null) {
+            if (collectionForDelete != null && collectionForDelete.size() != 0) {
                 removeInternetGatewayTags(id, collectionForDelete.toArray(new Tag[collectionForDelete.size()]));
             }
 
