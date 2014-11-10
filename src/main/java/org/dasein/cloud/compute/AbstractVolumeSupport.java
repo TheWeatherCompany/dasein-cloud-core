@@ -45,10 +45,10 @@ import java.util.*;
  * @version 2013.04
  * @since 2013.04
  */
-public abstract class AbstractVolumeSupport implements VolumeSupport {
-    private CloudProvider provider;
+public abstract class AbstractVolumeSupport<T extends CloudProvider> implements VolumeSupport {
+    private T provider;
 
-    public AbstractVolumeSupport(@Nonnull CloudProvider provider) {
+    public AbstractVolumeSupport(@Nonnull T provider) {
         this.provider = provider;
     }
 
@@ -186,7 +186,7 @@ public abstract class AbstractVolumeSupport implements VolumeSupport {
     /**
      * @return the cloud provider under which this support instance is operating
      */
-    protected final @Nonnull CloudProvider getProvider() {
+    protected final @Nonnull T getProvider() {
         return provider;
     }
 
@@ -285,13 +285,13 @@ public abstract class AbstractVolumeSupport implements VolumeSupport {
     }
 
     @Override
-    public void setTags(@Nonnull String[] volumeIds, @Nonnull Tag... tags) throws CloudException, InternalException {
-        for (String id : volumeIds) {
+    public void setTags( @Nonnull String[] volumeIds, @Nonnull Tag... tags ) throws CloudException, InternalException {
+        for( String id : volumeIds ) {
 
-            Collection<Tag> collectionForDelete = TagUtils.getTagsForDelete(getVolume(id).getTags(), tags);
+            Tag[] collectionForDelete = TagUtils.getTagsForDelete(getVolume(id).getTags(), tags);
 
-            if (collectionForDelete != null && collectionForDelete.size() != 0) {
-                removeTags(id, collectionForDelete.toArray(new Tag[collectionForDelete.size()]));
+            if( collectionForDelete.length != 0 ) {
+                removeTags(id, collectionForDelete);
             }
 
             updateTags(id, tags);
@@ -299,7 +299,7 @@ public abstract class AbstractVolumeSupport implements VolumeSupport {
     }
 
     @Override
-    public void setTags(@Nonnull String volumeId, @Nonnull Tag... tags) throws CloudException, InternalException {
+    public void setTags( @Nonnull String volumeId, @Nonnull Tag... tags ) throws CloudException, InternalException {
         setTags(new String[]{volumeId}, tags);
     }
 
@@ -307,5 +307,4 @@ public abstract class AbstractVolumeSupport implements VolumeSupport {
     public @Nonnull String toString() {
         return (getProvider().getProviderName() + "/" + getProvider().getCloudName() + "/Compute/Volumes");
     }
-
 }

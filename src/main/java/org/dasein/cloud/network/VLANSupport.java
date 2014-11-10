@@ -675,22 +675,22 @@ public interface VLANSupport extends AccessControlledService {
      * overwrite any new or pre-existing tags.
      *
      * @param subnetId the subnet to set
-     * @param tags  the meta-data tags to set
+     * @param tags     the meta-data tags to set
      * @throws CloudException    an error occurred within the cloud provider
      * @throws InternalException an error occurred within the Dasein Cloud API implementation
      */
-    public void setSubnetTags(@Nonnull String subnetId, @Nonnull Tag ... tags) throws CloudException, InternalException;
+    public void setSubnetTags( @Nonnull String subnetId, @Nonnull Tag... tags ) throws CloudException, InternalException;
 
     /**
      * Set meta-data for multiple subnet. Remove any tags that were not provided by the incoming tags, and add or
      * overwrite any new or pre-existing tags.
      *
      * @param subnetIds the subnets to set
-     * @param tags  the meta-data tags to set
+     * @param tags      the meta-data tags to set
      * @throws CloudException    an error occurred within the cloud provider
      * @throws InternalException an error occurred within the Dasein Cloud API implementation
      */
-    public void setSubnetTags(@Nonnull String[] subnetIds, @Nonnull Tag ... tags) throws CloudException, InternalException;
+    public void setSubnetTags( @Nonnull String[] subnetIds, @Nonnull Tag... tags ) throws CloudException, InternalException;
 
     /**
      * Removes the specified VLAN from the cloud.
@@ -789,22 +789,22 @@ public interface VLANSupport extends AccessControlledService {
      * overwrite any new or pre-existing tags.
      *
      * @param routingTableId the routing table to update
-     * @param tags the meta-data tags to set
+     * @param tags           the meta-data tags to set
      * @throws CloudException    an error occurred within the cloud provider
      * @throws InternalException an error occurred within the Dasein Cloud API implementation
      */
-    public void setRoutingTableTags(@Nonnull String routingTableId, @Nonnull Tag... tags) throws CloudException, InternalException;
+    public void setRoutingTableTags( @Nonnull String routingTableId, @Nonnull Tag... tags ) throws CloudException, InternalException;
 
     /**
      * Set meta-data for multiple routing tables. Remove any tags that were not provided by the incoming tags, and add or
      * overwrite any new or pre-existing tags.
      *
      * @param routingTableIds the routing tables to update
-     * @param tags the meta-data tags to set
+     * @param tags            the meta-data tags to set
      * @throws CloudException    an error occurred within the cloud provider
      * @throws InternalException an error occurred within the Dasein Cloud API implementation
      */
-    public void setRoutingTableTags(@Nonnull String[] routingTableIds, @Nonnull Tag... tags) throws CloudException, InternalException;
+    public void setRoutingTableTags( @Nonnull String[] routingTableIds, @Nonnull Tag... tags ) throws CloudException, InternalException;
 
     /**
      * Updates meta-data for a VLAN with the new values. It will not overwrite any value that currently
@@ -851,21 +851,21 @@ public interface VLANSupport extends AccessControlledService {
      * overwrite any new or pre-existing tags.
      *
      * @param internetGatewayId the internet gateway to update
-     * @param tags  the meta-data tags to set
+     * @param tags              the meta-data tags to set
      * @throws CloudException    an error occurred within the cloud provider
      * @throws InternalException an error occurred within the Dasein Cloud API implementation
      */
-    public void setInternetGatewayTags(@Nonnull String internetGatewayId, @Nonnull Tag... tags) throws CloudException, InternalException;
+    public void setInternetGatewayTags( @Nonnull String internetGatewayId, @Nonnull Tag... tags ) throws CloudException, InternalException;
 
     /**
      * Set meta-data for multiple internet gateways. Remove any tags that were not provided by the incoming tags, and add or
      * overwrite any new or pre-existing tags.
      *
      * @param internetGatewayIds the internet gateways to update
-     * @param tags the meta-data tags to set
+     * @param tags               the meta-data tags to set
      * @throws CloudException    an error occurred within the cloud provider
      * @throws InternalException an error occurred within the Dasein Cloud API implementation
      */
-    public void setInternetGatewayTags(@Nonnull String[] internetGatewayIds, @Nonnull Tag... tags) throws CloudException, InternalException;
+    public void setInternetGatewayTags( @Nonnull String[] internetGatewayIds, @Nonnull Tag... tags ) throws CloudException, InternalException;
 
 }

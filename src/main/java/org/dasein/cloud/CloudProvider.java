@@ -459,6 +459,7 @@ public abstract class CloudProvider {
 
     /**
      * Sets debug parameter to trigger debug functionality in particular providers.
+     *
      * @param debug
      */
     public void setDebug( boolean debug ) {

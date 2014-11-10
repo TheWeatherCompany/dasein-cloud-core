@@ -66,7 +66,9 @@ public interface VirtualMachineSupport extends AccessControlledService {
      * @return a virtual machine representing the scaled virtual machine
      * @throws InternalException an internal error occurred processing the request
      * @throws CloudException    an error occurred in the cloud processing the request
+     * @deprecated use {@link #alterVirtualMachineProduct(String, String)} or {@link #alterVirtualMachineSize(String, String, String)}
      */
+    @Deprecated
     public VirtualMachine alterVirtualMachine( @Nonnull String vmId, @Nonnull VMScalingOptions options ) throws InternalException, CloudException;
 
     /**
@@ -77,8 +79,44 @@ public interface VirtualMachineSupport extends AccessControlledService {
      * @return a virtual machine representing the scaled virtual machine
      * @throws InternalException an internal error occurred processing the request
      * @throws CloudException    an error occurred in the cloud processing the request
+     * @deprecated use {@link #alterVirtualMachineFirewalls(String, String[])}
      */
+    @Deprecated
     public abstract VirtualMachine modifyInstance( @Nonnull String vmId, @Nonnull String[] firewalls ) throws InternalException, CloudException;
+
+    /**
+     * Changes the VirtualMachineProduct for clouds that allow the operation.
+     * This method is intended for use in clouds with distinct, named products.
+     * @param virtualMachineId the virtual machine being altered
+     * @param productId the Id of the new product
+     * @return the modified VirtualMachine object
+     * @throws InternalException an internal error occurred processing the request
+     * @throws CloudException an error occurred in the cloud processing the request
+     */
+    public VirtualMachine alterVirtualMachineProduct(@Nonnull String virtualMachineId, @Nonnull String productId) throws InternalException, CloudException;
+
+    /**
+     * Changes the VirtualMachineProduct for clouds that allow the operation.
+     * This method is intended for use in clouds with contiguous, non-named products.
+     * @param virtualMachineId the virtual machine being altered
+     * @param cpuCount the new cpu count or null if cpus are not being altered
+     * @param ramInMB the new ram size or null if ram is not being altered
+     * @return the modified VirtualMachine object
+     * @throws InternalException an internal error occurred processing the request
+     * @throws CloudException an error occurred in the cloud processing the request
+     */
+    public VirtualMachine alterVirtualMachineSize(@Nonnull String virtualMachineId, @Nullable String cpuCount, @Nullable String ramInMB) throws InternalException, CloudException;
+
+    /**
+     * Changes the firewalls currently associated with the Virtual Machine.
+     * The method will attempt to match the firewalls in the specified array so needs to include existing as well as changing firewalls
+     * @param virtualMachineId the virtual machine being altered
+     * @param firewalls the array of firewall IDs to be associated with the VM
+     * @return the modified VirtualMachine object
+     * @throws InternalException an internal error occurred processing the request
+     * @throws CloudException an error occurred in the cloud processing the request
+     */
+    public VirtualMachine alterVirtualMachineFirewalls(@Nonnull String virtualMachineId, @Nonnull String[] firewalls) throws InternalException, CloudException;
 
     /**
      * Cancels the data feed for Spot VMs
@@ -172,12 +210,13 @@ public interface VirtualMachineSupport extends AccessControlledService {
 
     /**
      * Provides the userData as stored by the cloud provider (encrypted)
+     *
      * @param vmId the unique ID of the target server
      * @return the current userData of the virtual machine as stored by the provider
      * @throws InternalException an error occurred within the Dasein Cloud API implementation
-     * @throws CloudException an error occurred within the cloud provider
+     * @throws CloudException    an error occurred within the cloud provider
      */
-    public @Nullable String getUserData(@Nonnull String vmId) throws InternalException, CloudException;
+    public @Nullable String getUserData( @Nonnull String vmId ) throws InternalException, CloudException;
 
     /**
      * Provides all output from the console of the target server since the specified Unix time.
@@ -576,11 +615,11 @@ public interface VirtualMachineSupport extends AccessControlledService {
      * overwrite any new or pre-existing tags.
      *
      * @param vmId the virtual machine to set
-     * @param tags  the meta-data tags to set
+     * @param tags the meta-data tags to set
      * @throws CloudException    an error occurred within the cloud provider
      * @throws InternalException an error occurred within the Dasein Cloud API implementation
      */
-    public void setTags(@Nonnull String vmId, @Nonnull Tag... tags) throws CloudException, InternalException;
+    public void setTags( @Nonnull String vmId, @Nonnull Tag... tags ) throws CloudException, InternalException;
 
     /**
      * Set meta-data for multiple virtual machines. Remove any tags that were not provided by the incoming tags, and add or
@@ -591,7 +630,7 @@ public interface VirtualMachineSupport extends AccessControlledService {
      * @throws CloudException    an error occurred within the cloud provider
      * @throws InternalException an error occurred within the Dasein Cloud API implementation
      */
-    public void setTags(@Nonnull String[] vmIds, @Nonnull Tag... tags) throws CloudException, InternalException;
+    public void setTags( @Nonnull String[] vmIds, @Nonnull Tag... tags ) throws CloudException, InternalException;
 
     /**
      * Removes meta-data from a virtual machine. If tag values are set, their removal is dependent on underlying cloud

@@ -18,40 +18,39 @@ import java.util.Collection;
 public abstract class AbstractAutoScalingSupport implements AutoScalingSupport {
     private CloudProvider provider;
 
-    public AbstractAutoScalingSupport(@Nonnull CloudProvider provider) {
+    public AbstractAutoScalingSupport( @Nonnull CloudProvider provider ) {
         this.provider = provider;
     }
 
     @Override
-    public void setTags(@Nonnull String providerScalingGroupId, @Nonnull AutoScalingTag... tags) throws CloudException, InternalException {
+    public void setTags( @Nonnull String providerScalingGroupId, @Nonnull AutoScalingTag... tags ) throws CloudException, InternalException {
         setTags(new String[]{providerScalingGroupId}, tags);
     }
 
     @Override
-    public void setTags(@Nonnull String[] providerScalingGroupIds, @Nonnull AutoScalingTag... tags) throws CloudException, InternalException {
-        for (String id : providerScalingGroupIds) {
+    public void setTags( @Nonnull String[] providerScalingGroupIds, @Nonnull AutoScalingTag... tags ) throws CloudException, InternalException {
+        for( String id : providerScalingGroupIds ) {
 
-            Collection<AutoScalingTag> collectionForDelete = getTagsForDelete(getScalingGroup(id).getTags(), tags);
+            AutoScalingTag[] collectionForDelete = getTagsForDelete(getScalingGroup(id).getTags(), tags);
 
-            if (collectionForDelete != null && collectionForDelete.size() != 0) {
-                removeTags(new String[]{id}, collectionForDelete.toArray(new AutoScalingTag[collectionForDelete.size()]));
+            if( collectionForDelete.length != 0 ) {
+                removeTags(new String[]{id}, collectionForDelete);
             }
 
             updateTags(new String[]{id}, tags);
         }
     }
 
-    static public Collection<AutoScalingTag> getTagsForDelete(AutoScalingTag[] all, Tag[] tags) {
-        Collection<AutoScalingTag> result = null;
-        if (all != null) {
-            result = new ArrayList<AutoScalingTag>();
-            for (AutoScalingTag tag : all) {
-                if (!TagUtils.isKeyInTags(tag.getKey(), tags)) {
+    static public AutoScalingTag[] getTagsForDelete( AutoScalingTag[] all, Tag[] tags ) {
+        Collection<AutoScalingTag> result = new ArrayList<AutoScalingTag>();
+        if( all != null ) {
+            for( AutoScalingTag tag : all ) {
+                if( !TagUtils.isKeyInTags(tag.getKey(), tags) ) {
                     result.add(tag);
                 }
             }
         }
-        return result;
+        return result.toArray(new AutoScalingTag[result.size()]);
     }
 
 }

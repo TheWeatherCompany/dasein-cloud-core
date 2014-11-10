@@ -46,10 +46,10 @@ import java.util.Locale;
  * @version 2013.04
  * @since 2013.04
  */
-public abstract class AbstractImageSupport implements MachineImageSupport {
-    private CloudProvider provider;
+public abstract class AbstractImageSupport<T extends CloudProvider> implements MachineImageSupport {
+    private T provider;
 
-    public AbstractImageSupport(@Nonnull CloudProvider provider) {
+    public AbstractImageSupport(@Nonnull T provider) {
         this.provider = provider;
     }
 
@@ -147,7 +147,7 @@ public abstract class AbstractImageSupport implements MachineImageSupport {
     }
 
     @Override
-    public @Nonnull String copyImage(@Nonnull ImageCopyOptions options) throws CloudException, InternalException {
+    public @Nonnull String copyImage( @Nonnull ImageCopyOptions options ) throws CloudException, InternalException {
         throw new OperationNotSupportedException("Image copying is not currently implemented");
     }
 
@@ -156,7 +156,7 @@ public abstract class AbstractImageSupport implements MachineImageSupport {
         return getImage(providerImageId);
     }
 
-    protected final @Nonnull CloudProvider getProvider() {
+    protected final @Nonnull T getProvider() {
         return provider;
     }
 
@@ -605,18 +605,18 @@ public abstract class AbstractImageSupport implements MachineImageSupport {
     }
 
     @Override
-    public void setTags(@Nonnull String imageId, @Nonnull Tag... tags) throws CloudException, InternalException {
+    public void setTags( @Nonnull String imageId, @Nonnull Tag... tags ) throws CloudException, InternalException {
         setTags(new String[]{imageId}, tags);
     }
 
     @Override
-    public void setTags(@Nonnull String[] imageIds, @Nonnull Tag... tags) throws CloudException, InternalException {
-        for (String id : imageIds) {
+    public void setTags( @Nonnull String[] imageIds, @Nonnull Tag... tags ) throws CloudException, InternalException {
+        for( String id : imageIds ) {
 
-            Collection<Tag> collectionForDelete = TagUtils.getTagsForDelete(getImage(id).getTags(), tags);
+            Tag[] collectionForDelete = TagUtils.getTagsForDelete(getImage(id).getTags(), tags);
 
-            if (collectionForDelete != null && collectionForDelete.size() != 0) {
-                removeTags(id, collectionForDelete.toArray(new Tag[collectionForDelete.size()]));
+            if( collectionForDelete.length != 0 ) {
+                removeTags(id, collectionForDelete);
             }
 
             updateTags(id, tags);

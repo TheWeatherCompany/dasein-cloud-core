@@ -43,10 +43,10 @@ import java.util.Collections;
  * @since 2013.04
  * @version 2013.04
  */
-public abstract class AbstractSnapshotSupport implements SnapshotSupport {
-    private CloudProvider provider;
+public abstract class AbstractSnapshotSupport<T extends CloudProvider> implements SnapshotSupport {
+    private T provider;
 
-    public AbstractSnapshotSupport(@Nonnull CloudProvider provider) {
+    public AbstractSnapshotSupport(@Nonnull T provider) {
         this.provider = provider;
     }
 
@@ -87,7 +87,7 @@ public abstract class AbstractSnapshotSupport implements SnapshotSupport {
     /**
      * @return the provider object associated with any calls through this support object
      */
-    protected @Nonnull CloudProvider getProvider() {
+    protected final @Nonnull T getProvider() {
         return provider;
     }
 
@@ -285,18 +285,18 @@ public abstract class AbstractSnapshotSupport implements SnapshotSupport {
     }
 
     @Override
-    public void setTags(@Nonnull String snapshotId, @Nonnull Tag... tags) throws CloudException, InternalException {
+    public void setTags( @Nonnull String snapshotId, @Nonnull Tag... tags ) throws CloudException, InternalException {
         setTags(new String[]{snapshotId}, tags);
     }
 
     @Override
-    public void setTags(@Nonnull String[] snapshotIds, @Nonnull Tag... tags) throws CloudException, InternalException {
-        for (String id : snapshotIds) {
+    public void setTags( @Nonnull String[] snapshotIds, @Nonnull Tag... tags ) throws CloudException, InternalException {
+        for( String id : snapshotIds ) {
 
-            Collection<Tag> collectionForDelete = TagUtils.getTagsForDelete(getSnapshot(id).getTags(), tags);
+            Tag[] collectionForDelete = TagUtils.getTagsForDelete(getSnapshot(id).getTags(), tags);
 
-            if (collectionForDelete != null && collectionForDelete.size() != 0) {
-                removeTags(id, collectionForDelete.toArray(new Tag[collectionForDelete.size()]));
+            if( collectionForDelete.length != 0 ) {
+                removeTags(id, collectionForDelete);
             }
 
             updateTags(id, tags);

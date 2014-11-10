@@ -137,12 +137,13 @@ public interface MachineImageSupport extends AccessControlledService {
 
     /**
      * Copies a machine image from current region of the user to another region.
+     *
      * @param options the options used to copy the machine image.
      * @return ID of the new machine image created as a result of the copying.
-     * @throws CloudException an error occurred with the cloud provider
+     * @throws CloudException    an error occurred with the cloud provider
      * @throws InternalException a local error occurred in the Dasein Cloud implementation
      */
-    public @Nonnull String copyImage(@Nonnull ImageCopyOptions options) throws CloudException, InternalException;
+    public @Nonnull String copyImage( @Nonnull ImageCopyOptions options ) throws CloudException, InternalException;
 
     /**
      * Provides access to meta-data about virtual machine capabilities in the current region of this cloud.
@@ -606,11 +607,11 @@ public interface MachineImageSupport extends AccessControlledService {
      * overwrite any new or pre-existing tags.
      *
      * @param imageId the image to update
-     * @param tags     the meta-data tags to remove
+     * @param tags    the meta-data tags to remove
      * @throws CloudException    an error occurred within the cloud provider
      * @throws InternalException an error occurred within the Dasein Cloud API implementation
      */
-    public void setTags(@Nonnull String imageId, @Nonnull Tag... tags)  throws CloudException, InternalException;
+    public void setTags( @Nonnull String imageId, @Nonnull Tag... tags ) throws CloudException, InternalException;
 
     /**
      * Set meta-data for multiple images. Remove any tags that were not provided by the incoming tags, and add or
@@ -621,6 +622,6 @@ public interface MachineImageSupport extends AccessControlledService {
      * @throws CloudException    an error occurred within the cloud provider
      * @throws InternalException an error occurred within the Dasein Cloud API implementation
      */
-    public void setTags(@Nonnull String[] imageIds, @Nonnull Tag... tags)  throws CloudException, InternalException;
+    public void setTags( @Nonnull String[] imageIds, @Nonnull Tag... tags ) throws CloudException, InternalException;
 
 }
