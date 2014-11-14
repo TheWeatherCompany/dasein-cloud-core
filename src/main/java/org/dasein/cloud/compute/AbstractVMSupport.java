@@ -895,18 +895,6 @@ public abstract class AbstractVMSupport<T extends CloudProvider> implements Virt
     }
 
     @Override
-    public void updateTags(@Nonnull String vmId, boolean asynchronous, @Nonnull Tag... tags) throws CloudException, InternalException {
-        // NO-OP
-    }
-
-    @Override
-    public void updateTags(@Nonnull String[] vmIds, boolean asynchronous, @Nonnull Tag... tags) throws CloudException, InternalException {
-        for( String id : vmIds ) {
-            updateTags(id, asynchronous, tags);
-        }
-    }
-
-    @Override
     public void removeTags(@Nonnull String vmId, @Nonnull Tag... tags) throws CloudException, InternalException {
         // NO-OP
     }
@@ -945,7 +933,7 @@ public abstract class AbstractVMSupport<T extends CloudProvider> implements Virt
         for (String id : vmIds) {
             Collection<Tag> collectionForDelete = TagUtils.getTagsForDelete(getVirtualMachine(id).getTags(), tags);
 
-            if (collectionForDelete != null) {
+            if (collectionForDelete != null && collectionForDelete.size() != 0) {
                 removeTags(id, collectionForDelete.toArray(new Tag[collectionForDelete.size()]));
             }
 
