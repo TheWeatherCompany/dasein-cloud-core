@@ -3,6 +3,7 @@ package org.dasein.cloud.quotas;
 import java.util.Map;
 
 /**
+ * Describes quota limits for particular cloud resource
  * User: mgulimonov
  * Date: 23.07.2014
  */

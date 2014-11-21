@@ -1,6 +1,8 @@
 package org.dasein.cloud.quotas;
 
 /**
+ * Enumerates cloud resource types
+ *
  * User: mgulimonov
  * Date: 17.11.2014
  */
