@@ -201,6 +201,10 @@ public abstract class AbstractVLANSupport<T extends CloudProvider> implements VL
         return null;
     }
 
+    public RoutingTable getRoutingTable(@Nonnull RouteTableGetOptions options) throws CloudException, InternalException {
+        return null;
+    }
+
     @Override
     public RoutingTable getRoutingTable(@Nonnull String id) throws CloudException, InternalException {
       return null;
