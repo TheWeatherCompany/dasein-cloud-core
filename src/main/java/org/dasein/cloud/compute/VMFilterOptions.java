@@ -23,7 +23,6 @@ import org.dasein.cloud.CloudProvider;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.EnumSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -44,6 +43,7 @@ public class VMFilterOptions {
     private Map<String, String>       tags;
     private Set<VmState>              vmStates;
     private VirtualMachineLifecycle[] lifecycles;
+    private String                    subnetId;
     private String                    spotRequestId;
 
     /**
@@ -123,6 +123,13 @@ public class VMFilterOptions {
      */
     public @Nullable Set<VmState> getVmStates() {
         return vmStates;
+    }
+
+    /**
+     * @return subnetId, if any, on which filtering should be done
+     */
+    public @Nullable String getSubnetId() {
+        return subnetId;
     }
 
     /**
@@ -219,6 +226,9 @@ public class VMFilterOptions {
                 return true;
             }
         }
+        if (subnetId != null && !subnetId.isEmpty()) {
+            return subnetId.equals(vm.getProviderSubnetId());
+        }
         return !matchesAny;
     }
 
@@ -288,6 +298,16 @@ public class VMFilterOptions {
     }
 
     /**
+     * Builds filtering options that will force filtering on the specified subnet id.
+     * @param subnetId the subnet id on which to filter
+     * @return this
+     */
+    public @Nonnull VMFilterOptions withSubnetId(@Nonnull String subnetId) {
+        this.subnetId = subnetId;
+        return this;
+    }
+
+    /**
      * Builds filtering options that will force filtering on the specified VM lifecycles.
      *
      * @param lifecycles
@@ -307,5 +327,4 @@ public class VMFilterOptions {
         this.spotRequestId = spotRequestId;
         return this;
     }
-
 }

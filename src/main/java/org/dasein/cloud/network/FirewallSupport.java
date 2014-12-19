@@ -19,22 +19,15 @@
 
 package org.dasein.cloud.network;
 
-import java.util.Collection;
-import java.util.Locale;
-import java.util.Map;
-
-import org.dasein.cloud.AccessControlledService;
-import org.dasein.cloud.CloudException;
-import org.dasein.cloud.InternalException;
-import org.dasein.cloud.OperationNotSupportedException;
-import org.dasein.cloud.Requirement;
-import org.dasein.cloud.ResourceStatus;
-import org.dasein.cloud.Tag;
+import org.dasein.cloud.*;
 import org.dasein.cloud.identity.ServiceAction;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Collection;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * <p>
@@ -315,6 +308,15 @@ public interface FirewallSupport extends AccessControlledService {
      * @throws CloudException an error occurred with the cloud provider while performing the operation
      */
     public @Nonnull Collection<Firewall> list() throws InternalException, CloudException;
+
+    /**
+     * Lists all firewalls for specified networkId in the current provider context.
+     * @param networkId - network id
+     * @return a list of all firewalls in the current provider context
+     * @throws InternalException an error occurred locally independent of any events in the cloud
+     * @throws CloudException an error occurred with the cloud provider while performing the operation
+     */
+    public @Nonnull Collection<Firewall> list(String networkId) throws InternalException, CloudException;
 
     /**
      * Lists the status for all firewalls in the current provider context.
