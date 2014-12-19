@@ -6,16 +6,7 @@ package org.dasein.cloud.platform.support.model.options;
  */
 public class TicketCreateAttachmentsOptions {
 
-    private String ticketId;
     private TicketAttachmentDataOptions[] attachments;
-
-    public String getTicketId() {
-        return ticketId;
-    }
-
-    public void setTicketId( String ticketId ) {
-        this.ticketId = ticketId;
-    }
 
     public TicketAttachmentDataOptions[] getAttachments() {
         return attachments;
