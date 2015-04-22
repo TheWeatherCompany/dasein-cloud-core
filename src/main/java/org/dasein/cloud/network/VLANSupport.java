@@ -334,6 +334,15 @@ public interface VLANSupport extends AccessControlledService {
 
     /**
      * Identifies the routing table that matches the provided id.
+     * @param options the options to be used for getting route table
+     * @return the matching routing table or <code>null</code> if the cloud doesn't support routing tables or no routing table is found
+     * @throws CloudException an error occurred loading the routing table
+     * @throws InternalException a local error occurred identifying the routing table
+     */
+    public @Nullable RoutingTable getRoutingTable(@Nonnull RouteTableGetOptions options) throws CloudException, InternalException;
+
+    /**
+     * Identifies the routing table that matches the provided id.
      * @param id the id of the route table
      * @return the matching routing table or <code>null</code> if the cloud doesn't support routing tables or no routing table is found
      * @throws CloudException an error occurred loading the routing table
