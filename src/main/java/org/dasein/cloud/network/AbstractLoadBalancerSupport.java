@@ -27,14 +27,13 @@ import org.dasein.cloud.ProviderContext;
 import org.dasein.cloud.Requirement;
 import org.dasein.cloud.ResourceStatus;
 import org.dasein.cloud.identity.ServiceAction;
+import org.dasein.cloud.Tag;
+import org.dasein.cloud.util.TagUtils;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Locale;
+import java.util.*;
 
 /**
  * Provides a basic implementation of load balancer support that you can extend and customize to support your cloud.
@@ -463,5 +462,29 @@ public abstract class AbstractLoadBalancerSupport<T extends CloudProvider> imple
     @Override
     public void detachLoadBalancerFromSubnets(@Nonnull String fromLoadBalancerId, @Nonnull String... subnetIdsToDelete) throws CloudException, InternalException {
         throw new OperationNotSupportedException("Detaching load balancer to subnets has not been implemented for " + getProvider().getCloudName());
+    }
+
+    @Override public void updateTags( @Nonnull String id, @Nonnull Tag... tags ) throws CloudException, InternalException {
+        updateTags(new String[]{id}, tags);
+    }
+
+    @Override public void setTags( @Nonnull String id, @Nonnull Tag... tags ) throws CloudException, InternalException {
+        setTags(new String[]{id}, tags);
+    }
+
+    @Override public void setTags( @Nonnull String[] ids, @Nonnull Tag... tags ) throws CloudException, InternalException {
+        for (String id : ids) {
+            Collection<Tag> collectionForDelete = TagUtils.getTagsForDelete(getLoadBalancer(id).getTags(), tags);
+
+            if (collectionForDelete != null) {
+                removeTags(id, collectionForDelete.toArray(new Tag[collectionForDelete.size()]));
+            }
+
+            updateTags(id, tags);
+        }
+    }
+
+    @Override public void removeTags( @Nonnull String id, @Nonnull Tag... tags ) throws CloudException, InternalException {
+        removeTags(new String[]{id}, tags);
     }
 }

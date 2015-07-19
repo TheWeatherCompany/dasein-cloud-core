@@ -27,6 +27,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * Implements support for cloud load balancing services.
@@ -394,6 +395,85 @@ public interface LoadBalancerSupport extends AccessControlledService {
      * @throws InternalException an error occurred within the Dasein Cloud implementation while performing this action
      */
     public void detatchHealthCheck(String loadBalancerId, String heathcheckId) throws CloudException, InternalException;
+
+    /**
+     * Updates meta-data for a load balancer with the new values. It will not overwrite any value that currently
+     * exists unless it appears in the tags you submit.
+     *
+     * @param id   the load balancer to update
+     * @param tags the meta-data tags to set
+     * @throws CloudException    an error occurred within the cloud provider
+     * @throws InternalException an error occurred within the Dasein Cloud API implementation
+     */
+    public abstract void updateTags( @Nonnull String id, @Nonnull Tag... tags ) throws CloudException, InternalException;
+
+    /**
+     * Updates meta-data for multiple load balancers with the new values. It will not overwrite any value that currently
+     * exists unless it appears in the tags you submit.
+     *
+     * @param ids  the load balancers to update
+     * @param tags the meta-data tags to set
+     * @throws CloudException    an error occurred within the cloud provider
+     * @throws InternalException an error occurred within the Dasein Cloud API implementation
+     */
+    public abstract void updateTags( @Nonnull String[] ids, @Nonnull Tag... tags ) throws CloudException, InternalException;
+
+
+    /**
+     * Set meta-data for a load balancer. Remove any tags that were not provided by the incoming tags, and add or
+     * overwrite any new or pre-existing tags.
+     *
+     * @param id   the load balancer to update
+     * @param tags the meta-data tags to set
+     * @throws CloudException    an error occurred within the cloud provider
+     * @throws InternalException an error occurred within the Dasein Cloud API implementation
+     */
+    public void setTags( @Nonnull String id, @Nonnull Tag... tags ) throws CloudException, InternalException;
+
+    /**
+     * Set meta-data for multiple load balancers. Remove any tags that were not provided by the incoming tags, and add or
+     * overwrite any new or pre-existing tags.
+     *
+     * @param ids  the load balancers to update
+     * @param tags the meta-data tags to set
+     * @throws CloudException    an error occurred within the cloud provider
+     * @throws InternalException an error occurred within the Dasein Cloud API implementation
+     */
+    public void setTags( @Nonnull String[] ids, @Nonnull Tag... tags ) throws CloudException, InternalException;
+
+    /**
+     * Removes meta-data from a load balancer. If tag values are set, their removal is dependent on underlying cloud
+     * provider behavior. They may be removed only if the tag value matches or they may be removed regardless of the
+     * value.
+     *
+     * @param id   the unique ID of the load balancer to update
+     * @param tags the meta-data tags to remove
+     * @throws CloudException    an error occurred within the cloud provider
+     * @throws InternalException an error occurred within the Dasein Cloud API implementation
+     */
+    public abstract void removeTags( @Nonnull String id, @Nonnull Tag... tags ) throws CloudException, InternalException;
+
+    /**
+     * Removes meta-data from multiply load balancers. If tag values are set, their removal is dependent on underlying cloud
+     * provider behavior. They may be removed only if the tag value matches or they may be removed regardless of the
+     * value.
+     *
+     * @param ids  the load balancers to update
+     * @param tags the meta-data tags to remove
+     * @throws CloudException    an error occurred within the cloud provider
+     * @throws InternalException an error occurred within the Dasein Cloud API implementation
+     */
+    public abstract void removeTags( @Nonnull String[] ids, @Nonnull Tag... tags ) throws CloudException, InternalException;
+
+    /**
+     * Lists all meta-data from a load balancer.
+     *
+     * @param id the unique ID of the load balancer to update
+     * @return tags
+     * @throws CloudException    an error occurred within the cloud provider
+     * @throws InternalException an error occurred within the Dasein Cloud API implementation
+     */
+    public Iterable<Tag> listTags( String id ) throws CloudException, InternalException;
 
     /********************************** DEPRECATED METHODS *************************************/
 
