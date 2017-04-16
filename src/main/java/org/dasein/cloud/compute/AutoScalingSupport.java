@@ -106,15 +106,17 @@ public interface AutoScalingSupport extends AccessControlledService {
 
     public ScalingPolicy getScalingPolicy( @Nonnull String policyName ) throws CloudException, InternalException;
 
-    public Iterable<ResourceStatus> listScalingGroupStatus() throws CloudException, InternalException;
+    public Iterable<ResourceStatus> listScalingGroupStatus( @Nullable String nextToken ) throws CloudException, InternalException;
+
+    public Collection<ScalingGroup> listScalingGroups( AutoScalingGroupFilterOptions options, @Nullable String nextToken ) throws CloudException, InternalException;
 
     public Collection<ScalingGroup> listScalingGroups( AutoScalingGroupFilterOptions options ) throws CloudException, InternalException;
 
     public Collection<ScalingGroup> listScalingGroups() throws CloudException, InternalException;
 
-    public Iterable<ResourceStatus> listLaunchConfigurationStatus() throws CloudException, InternalException;
+    public Iterable<ResourceStatus> listLaunchConfigurationStatus( @Nullable String nextToken ) throws CloudException, InternalException;
 
-    public Collection<LaunchConfiguration> listLaunchConfigurations() throws CloudException, InternalException;
+    public Collection<LaunchConfiguration> listLaunchConfigurations( @Nullable String nextToken ) throws CloudException, InternalException;
 
     public void setDesiredCapacity( String scalingGroupId, int capacity ) throws CloudException, InternalException;
 
